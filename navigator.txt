@@ -1,0 +1,5 @@
+TokenKind - TOK(X)
+PPKeywordKind - PPKEYWORD(X)
+ObjCKeywordKind - OBJC_AT_KEYWORD(X)
+NotableIdentifierKind - NOTABLE_IDENTIFIER(X)
+OnOffSwitch
