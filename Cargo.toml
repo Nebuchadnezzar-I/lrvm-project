@@ -5,7 +5,10 @@ edition = "2021"
 
 [workspace]
 members = [
-    "clang"
+    "clang",
+    "clang/lexer",
+    "clang/token",
 ]
 
 [dependencies]
+token = { path = "clang/token" }

@@ -1,220 +1,75 @@
-pub mod clang {
-    pub mod tok {
+use strum_macros::EnumCount;
 
-        // Provides a simple uniform namespace for tokens from all C languages.
-        pub enum TokenKind {
-            // TOK
-            TUnknown,
-            TEof,
-            TEod,
-            TCodeCompletion,
-            TComment,
-            TIdentifier,
-            TRawIdentifier,
-            TNumericConstant,
-            TBinaryData,
-            TCharConstant,
-            TWideCharConstant,
-            TUtf8CharConstant,
-            TUtf16CharConstant,
-            TUtf32CharConstant,
-            TStringLiteral,
-            TWideStringLiteral,
-            THeaderName,
-            TUtf8StringLiteral,
-            TUtf16StringLiteral,
-            TUtf32StringLiteral,
-            // KEYWORD
-            Tauto,
-            Tbreak,
-            Tcase,
-            Tchar,
-            Tconst,
-            Tcontinue,
-            Tdefault,
-            Tdo,
-            Tdouble,
-            Telse,
-            Tenum,
-            Textern,
-            Tfloat,
-            Tfor,
-            Tgoto,
-            Tif,
-            Tint,
-            TExtInt,
-            TBitInt,
-            Tlong,
-            Tregister,
-            Treturn,
-            Tshort,
-            Tsigned,
-            Tstatic,
-            Tstruct,
-            Tswitch,
-            Ttypedef,
-            Tunion,
-            Tunsigned,
-            Tvoid,
-            Tvolatile,
-            Twhile,
-            TAlignas,
-            TAlignof,
-            TAtomic,
-            TBool,
-            TComplex,
-            TGeneric,
-            TImaginary,
-            TNoreturn,
-            TStaticAssert,
-            TThreadLocal,
-            Tfunc__,
-            TobjcYes,
-            TobjcNo,
-            Tasm,
-            Tbool,
-            Tcatch,
-            Tclass,
-            TconstCast,
-            Tdelete,
-            TdynamicCast,
-            Texplicit,
-            Texport,
-            Tfalse,
-            Tfriend,
-            Tmutable,
-            Tnamespace,
-            Tnew,
-            Toperator,
-            Tprivate,
-            Tprotected,
-            Tpublic,
-            TreinterpretCast,
-            TstaticCast,
-            Ttemplate,
-            Tthis,
-            Tthrow,
-            Ttrue,
-            Ttry,
-            Ttypename,
-            Ttypeid,
-            Tusing,
-            Tvirtual,
-            TwcharT,
-            TCXXand,
-            TCXXandEq,
-            TCXXbitand,
-            TCXXbitor,
-            TCXXcompl,
-            TCXXnot,
-            TCXXnotEq,
-            TCXXor,
-            TCXXorEq,
-            TCXXxor,
-            TCXXxorEq,
-            Trestrict,
-            Tinline,
-            Talignas,
-            Tchar16T,
-            Tchar32T,
-            Tconstexpr,
-            Tdecltype,
-            Tnoexcept,
-            Tnullptr,
-            TstaticAssert,
-            TthreadLocal,
-            TcoAwait,
-            TcoReturn,
-            TcoYield,
-            Tmodule,
-            Timport,
-            Tconsteval,
-            Tconstinit,
-            Tconcept,
-            Trequires,
-            Tchar8T,
-            TFloat16,
-            TTypeof,
-            TtypeofUnqual,
-            TAccum,
-            TFract,
-            TSat,
-            TDecimal32,
-            TDecimal64,
-            TDecimal128,
-            Tnull,
-            Talignof,
-            Tattribute,
-            TbuiltinChooseExpr,
-            TbuiltinOffsetof,
-            TbuiltinFILE,
-            TbuiltinFILENAME,
-            TbuiltinFUNCTION,
-            TbuiltinFUNCSIG,
-            TbuiltinLINE,
-            TbuiltinCOLUMN,
-            TbuiltinSourceLocation,
-            TbuiltinVaArg,
-            Textension__,
-            Tfloat128,
-            Tibm128,
-            Timag,
-            Tint128,
-            Tlabel__,
-            Treal,
-            Tthread,
-            TFUNCTION__,
-            TPRETTYFUNCTION__,
-            TautoType,
-            TFUNCDNAME__,
-            TFUNCSIG__,
-            TLFUNCTION__,
-            TLFUNCSIG__,
-            TprivateExtern__,
-            TmodulePrivate__,
-            Tdeclspec,
-            Tcdecl,
-            Tstdcall,
-            Tfastcall,
-            Tthiscall,
-            Tregcall,
-            Tvectorcall,
-            Tforceinline,
-            Tunaligned,
-            Tsuper,
-            Tglobal,
-            Tlocal,
-            Tconstant,
-            Tgeneric,
-            Tkernel,
-            TreadOnly,
-            TwriteOnly,
-            TreadWrite,
-        }
+// Provides a simple uniform namespace for tokens from all C languages.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, EnumCount)]
+pub enum TokenKind {
+    Unknown, Eof, Eod, CodeCompletion, Comment, Identifier, RawIdentifier,
+    NumericConstant, BinaryData, CharConstant, WideCharConstant,
+    Utf8CharConstant, Utf16CharConstant, Utf32CharConstant, StringLiteral,
+    WideStringLiteral, HeaderName, Utf8StringLiteral, Utf16StringLiteral,
+    Utf32StringLiteral,
+    // punctuators
+    Lsquare, Rsquare, Lparen, Rparen, Lbrace, Rbrace, Period, Ellipsis,
+    Amp, Ampamp, Ampequal, Star, Starequal, Plus, Plusplus, Plusequal,
+    Minus, Arrow, Minusminus, Minusequal, Tilde, Exclaim, Exclaimequal,
+    Slash, Slashequal, Percent, Percentequal, Less, Lessless, Lessequal,
+    Lesslessequal, Spaceship, Greater, Greatergreater, Greaterequal,
+    Greatergreaterequal, Caret, Caretequal, Pipe, Pipepipe, Pipeequal,
+    Question, Colon, Semi, Equal, Equalequal, Comma, Hash, Hashhash,
+    Hashat, Periodstar, Arrowstar, Coloncolon, At, Lesslessless,
+    Greatergreatergreater,
+}
 
-        // Provides a namespace for preprocessor keywords which start with a
-        // '#' at the beginning of the line.
-        pub enum PPKeywordKind {
+const TOKEN_NAMES: [&str; 76] = [
+    "unknown", "eof", "eod", "code_completion", "comment", "identifier", "raw_identifier",
+    "numeric_constant", "binary_data", "char_constant", "wide_char_constant", "utf8_char_constant",
+    "utf16_char_constant", "utf32_char_constant", "string_literal", "wide_string_literal",
+    "header_name", "utf8_string_literal", "utf16_string_literal", "utf32_string_literal",
+    // punctuators
+    "[", "]", "(", ")", "{", "}", ".", "...", "&", "&&", "&=", "*", "*=", "+", "++",
+    "+=", "-", "->", "--", "-=", "~", "!", "!=", "/", "/=", "%", "%=", "<", "<<", "<=",
+    "<<=", "<=>", ">", ">>", ">=", ">>=", "^", "^=", "|", "||", "|=", "?", ":", ";",
+    "=", "==", ",", "#", "##", "#@", ".*", "->*", "::", "@", "<<<", ">>>",
+];
 
-        }
+// Provides a namespace for preprocessor keywords which start with a
+// '#' at the beginning of the line.
+pub enum PPKeywordKind {
+    NotKeyword, If, Ifdef, Ifndef, Elif, Elifdef, Elifndef, Else, Endif,
+    Defined, Include, IncludeMacros, Define, Undef, Line, Error, Pragma,
+    Embed, Import, IncludeNext, Warning, Ident, Sccs, Assert, Unassert,
+    PublicMacro, PrivateMacro,
+}
 
-        // Provides a namespace for Objective-C keywords which start with
-        // an '@'.
-        pub enum ObjCKeywordKind {
+// Provides a namespace for Objective-C keywords which start with
+// an '@'.
+pub enum ObjCKeywordKind {
+    NotKeyword, Class, CompatibilityAlias, Defs, Encode, End, Implementation,
+    Interface, Private, Protected, Protocol, Public, Selector, Throw,
+    Try, Catch, Finally, Synchronized, Autoreleasepool, Property,
+    Package, Required, Optional, Synthesize, Dynamic, Import, Available,
+}
 
-        }
+// Provides a namespace for notable identifers such as float_t and
+// double_t.
+pub enum NotableIdentifierKind {
+    NotNotable, FILE, JmpBuf, SigjmpBuf, Ucontextt, Floatt, Doublet,
+}
 
-        // Provides a namespace for notable identifers such as float_t and
-        // double_t.
-        pub enum NotableIdentifierKind {
+pub enum OnOffSwitch {
+    OosON,
+    OosOFF,
+    OosDEFAULT
+}
 
-        }
-
-        pub enum OnOffSwitch {
-            OosON,
-            OosOFF,
-            OosDEFAULT
-        }
-
+/// Determines the name of a token as used within the front end.
+///
+/// The name of a token will be an internal name (such as "l_square")
+/// and should not be used as part of diagnostic messages.
+pub fn get_token_name(kind: TokenKind) -> &'static str {
+    if (kind as usize) < TOKEN_NAMES.len() {
+        TOKEN_NAMES[kind as usize]
+    } else {
+        TOKEN_NAMES[0]
     }
 }
